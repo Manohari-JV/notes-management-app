@@ -20,11 +20,12 @@ function App() {
     tags: string[]
   ) => {
     const newNote: Note = {
-      id: uuidv4(),
-      title,
-      content,
-      tags,
-    };
+  id: uuidv4(),
+  title,
+  content,
+  tags,
+  createdAt: new Date().toLocaleString(),
+};
 
     const updatedNotes = [...notes, newNote];
 
@@ -68,7 +69,12 @@ function App() {
         filteredNotes.map((note) => (
           <div key={note.id} className="note-card">
             <h3>{note.title}</h3>
-            <p>{note.content}</p>
+
+<small>
+  Created: {note.createdAt || "NO DATE FOUND"}
+</small>
+
+<p>{note.content}</p>
 
             <strong>Tags:</strong>{" "}
             {note.tags.join(", ")}
