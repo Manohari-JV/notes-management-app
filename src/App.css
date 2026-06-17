@@ -154,3 +154,52 @@ hr {
   cursor: pointer;
   margin-right: 8px;
 }
+
+.theme-btn {
+  background: #4338ca;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.dark-mode {
+  background: #111827;
+  color: white;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3 {
+  color: #f9fafb;
+}
+
+.dark-mode .subtitle,
+.dark-mode small {
+  color: #d1d5db;
+}
+
+.dark-mode .note-card {
+  background: #1f2937;
+  color: white;
+}
+
+.dark-mode .note-content {
+  color: #e5e7eb;
+}
+
+.dark-mode .tag {
+  background: #374151;
+  color: #c4b5fd;
+}
+
+select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: white;
+  margin-left: 8px;
+}
