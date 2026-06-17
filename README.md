@@ -78,25 +78,6 @@ This project was developed as part of a case study to demonstrate problem-solvin
 
 * Browser Local Storage
 
-## Application Screenshots
-
-### Create Note
-
-![Create Note](./screenshots/create note.png)
-
-### Search 
-
-![Search and Filter](./screenshots/search by tag.png)
-
-### Notes List
-
-![Notes List](./screenshots/notes list.png)
-
-
-### Trash and Restore
-
-![Trash](./screenshots/thrash.png)
-
 ## Setup and Run Instructions
 
 ### Clone Repository
