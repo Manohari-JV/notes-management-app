@@ -76,17 +76,39 @@ function App() {
 
 <p>{note.content}</p>
 
-            <strong>Tags:</strong>{" "}
-            {note.tags.join(", ")}
+            <div>
+  {note.tags.map((tag) => (
+    <span
+      key={tag}
+      style={{
+        backgroundColor: "#e5e7eb",
+        padding: "4px 8px",
+        borderRadius: "12px",
+        marginRight: "6px",
+        fontSize: "12px",
+      }}
+    >
+      {tag}
+    </span>
+  ))}
+</div>
 
             <br />
             <br />
 
             <button
-              onClick={() => deleteNote(note.id)}
-            >
-              Delete
-            </button>
+  onClick={() => alert("Edit feature coming next")}
+>
+  Edit
+</button>
+
+{" "}
+
+<button
+  onClick={() => deleteNote(note.id)}
+>
+  Delete
+</button>
           </div>
         ))
       )}
