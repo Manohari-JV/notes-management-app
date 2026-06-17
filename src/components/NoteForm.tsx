@@ -1,14 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface NoteFormProps {
   onAddNote: (title: string, content: string, tags: string[]) => void;
+  editingNote?: {
+    title: string;
+    content: string;
+    tags: string[];
+  } | null;
 }
 
-function NoteForm({ onAddNote }: NoteFormProps) {
+function NoteForm({
+  onAddNote,
+  editingNote,
+}: NoteFormProps) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
-
+  useEffect(() => {
+  if (editingNote) {
+    setTitle(editingNote.title);
+    setContent(editingNote.content);
+    setTags(editingNote.tags.join(", "));
+  }
+}, [editingNote]);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -62,7 +76,9 @@ function NoteForm({ onAddNote }: NoteFormProps) {
       <br />
       <br />
 
-      <button type="submit">Add Note</button>
+      <button type="submit">
+  {editingNote ? "Update Note" : "Add Note"}
+</button>
     </form>
   );
 }

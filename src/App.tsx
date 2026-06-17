@@ -9,29 +9,50 @@ import "./App.css";
 function App() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [searchTag, setSearchTag] = useState("");
-
+  const [editingNote, setEditingNote] = useState<Note | null>(null);
+  
+  
   useEffect(() => {
     setNotes(getNotes());
   }, []);
 
   const addNote = (
-    title: string,
-    content: string,
-    tags: string[]
-  ) => {
-    const newNote: Note = {
-  id: uuidv4(),
-  title,
-  content,
-  tags,
-  createdAt: new Date().toLocaleString(),
-};
-
-    const updatedNotes = [...notes, newNote];
+  title: string,
+  content: string,
+  tags: string[]
+) => {
+  if (editingNote) {
+    const updatedNotes = notes.map((note) =>
+      note.id === editingNote.id
+        ? {
+            ...note,
+            title,
+            content,
+            tags,
+          }
+        : note
+    );
 
     setNotes(updatedNotes);
     saveNotes(updatedNotes);
+    setEditingNote(null);
+
+    return;
+  }
+
+  const newNote: Note = {
+    id: uuidv4(),
+    title,
+    content,
+    tags,
+    createdAt: new Date().toLocaleString(),
   };
+
+  const updatedNotes = [...notes, newNote];
+
+  setNotes(updatedNotes);
+  saveNotes(updatedNotes);
+};
 
   const deleteNote = (id: string) => {
     const updatedNotes = notes.filter(
@@ -52,7 +73,10 @@ function App() {
     <div style={{ padding: "20px" }}>
       <h1>Notes Management Application</h1>
 
-      <NoteForm onAddNote={addNote} />
+      <NoteForm
+  onAddNote={addNote}
+  editingNote={editingNote}
+/>
 
       <SearchBar
         searchTag={searchTag}
@@ -97,7 +121,7 @@ function App() {
             <br />
 
             <button
-  onClick={() => alert("Edit feature coming next")}
+  onClick={() => setEditingNote(note)}
 >
   Edit
 </button>
