@@ -76,9 +76,17 @@ function App() {
 });
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Notes Management Application</h1>
-
+    <div
+  style={{
+    maxWidth: "600px",
+    margin: "0 auto",
+    padding: "20px",
+  }}
+>
+<h1>📝 Notes Manager</h1>
+<p className="subtitle">
+  Organize your ideas and tasks efficiently
+</p>
       <NoteForm
   onAddNote={addNote}
   editingNote={editingNote}
@@ -91,7 +99,9 @@ function App() {
 
       <hr />
 
-      <h2>Notes</h2>
+      <div style={{ textAlign: "center" }}>
+  <h2>📚 My Notes</h2>
+</div>
 
       {filteredNotes.length === 0 ? (
         <p>No notes found.</p>
@@ -104,42 +114,37 @@ function App() {
   Created: {note.createdAt || "NO DATE FOUND"}
 </small>
 
-<p>{note.content}</p>
+<p className="note-content">
+      {note.content}
+    </p>
 
-            <div>
-  {note.tags.map((tag) => (
-    <span
-      key={tag}
-      style={{
-        backgroundColor: "#e5e7eb",
-        padding: "4px 8px",
-        borderRadius: "12px",
-        marginRight: "6px",
-        fontSize: "12px",
-      }}
+            <div className="tags-container">
+      {note.tags.map((tag) => (
+        <span key={tag} className="tag">
+          {tag}
+        </span>
+      ))}
+    </div>
+
+            <br />
+            <br />
+
+            <div className="button-group">
+    <button
+      className="edit-btn"
+      onClick={() => setEditingNote(note)}
     >
-      {tag}
-    </span>
-  ))}
+      ✏️ Edit
+    </button>
+
+    <button
+      className="delete-btn"
+      onClick={() => deleteNote(note.id)}
+    >
+      🗑 Delete
+    </button>
+  </div>
 </div>
-
-            <br />
-            <br />
-
-            <button
-  onClick={() => setEditingNote(note)}
->
-  Edit
-</button>
-
-{" "}
-
-<button
-  onClick={() => deleteNote(note.id)}
->
-  Delete
-</button>
-          </div>
         ))
       )}
     </div>

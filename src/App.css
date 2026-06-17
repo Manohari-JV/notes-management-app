@@ -1,41 +1,145 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #f5f5f5;
+  font-family: "Inter", sans-serif;
+  background: #f3f4ff;
   margin: 0;
-  padding: 20px;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
+
+/* Header */
+
+h1 {
+  font-size: 42px;
+  font-weight: 800;
+  color: #312e81;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #64748b;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #4338ca;
+}
+
+h3 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* Inputs */
 
 input,
 textarea {
   width: 100%;
-  max-width: 600px;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
-button {
-  padding: 8px 14px;
-  cursor: pointer;
+/* Search Bar */
+
+.MuiOutlinedInput-root {
+  background: white;
+  border-radius: 30px !important;
 }
+
+/* Note Cards */
 
 .note-card {
   background: white;
-  border-radius: 8px;
-  padding: 15px;
+  border-radius: 18px;
+  padding: 24px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.note-card h3 {
+  margin: 0;
+  color: #111827;
+}
+
+.note-card small {
+  color: #6b7280;
+}
+
+.note-content {
+  margin-top: 12px;
+  margin-bottom: 15px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+/* Tags */
+
+.tags-container {
   margin-top: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-body {
-  background-color: #f5f5f5;
-  color: #111827;
+.tag {
+  display: inline-block;
+  background: #ede9fe;
+  color: #6d28d9;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-right: 8px;
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
-h1,
-h2,
-h3,
-p,
-small {
-  color: #111827;
+/* Button Section */
+
+.button-group {
+  margin-top: 20px;
+}
+
+/* Edit Button */
+
+.edit-btn {
+  background: #6366f1;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+/* Delete Button */
+
+.delete-btn {
+  background: #f472b6;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Divider */
+
+hr {
+  border: none;
+  border-top: 1px solid #cbd5e1;
+  margin: 25px 0;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  .note-card {
+    padding: 18px;
+  }
 }
