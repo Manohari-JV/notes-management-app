@@ -110,6 +110,14 @@ npm run build
 ```bash
 npm run preview
 ```
+## Assumptions Made During Development
+
+Notes are stored locally in the browser.
+No user authentication is required.
+Application is designed for single-user usage.
+Export functionality is provided in JSON format.
+Internet connection is not required after loading the application.
+Local Storage is sufficient for persistence requirements.
 
 ## Project Outcome
 
