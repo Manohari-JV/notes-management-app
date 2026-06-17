@@ -10,7 +10,8 @@ function App() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [searchTag, setSearchTag] = useState("");
   const [editingNote, setEditingNote] = useState<Note | null>(null);
-  
+  const [selectedNote, setSelectedNote] =
+  useState<string | null>(null);
   
   useEffect(() => {
     setNotes(getNotes());
@@ -72,6 +73,11 @@ const togglePin = (id: string) => {
 
   setNotes(updatedNotes);
   saveNotes(updatedNotes);
+};
+const toggleNote = (id: string) => {
+  setSelectedNote(
+    selectedNote === id ? null : id
+  );
 };
   const filteredNotes = notes
   .filter((note) => {
@@ -135,62 +141,102 @@ const togglePin = (id: string) => {
 </div>
       ) : (
         filteredNotes.map((note) => (
-          <div key={note.id} className="note-card">
-  {note.pinned && (
-    <div
-      style={{
-        color: "#7c3aed",
-        fontWeight: "bold",
-        marginBottom: "8px",
-      }}
-    >
-      📌 Pinned
-    </div>
-  )}
+  <div key={note.id} className="note-card">
+    {note.pinned && (
+      <div
+        style={{
+          color: "#7c3aed",
+          fontWeight: "bold",
+          marginBottom: "8px",
+        }}
+      >
+        📌 Pinned
+      </div>
+    )}
 
-  <h3>{note.title}</h3>
-
-  <small>
-    Created: {note.createdAt}
-  </small>
-
-  <p className="note-content">
-    {note.content}
-  </p>
-
-  <div className="tags-container">
-    {note.tags.map((tag) => (
-      <span key={tag} className="tag">
-        {tag}
-      </span>
-    ))}
-  </div>
-
-  <div className="button-group">
-   <button
-  className="pin-btn"
-  onClick={() => togglePin(note.id)}
+    <h3
+  style={{
+    cursor: "pointer",
+    color: "#4338ca",
+    fontSize: "20px",
+    fontWeight: 600,
+  }}
+  onClick={() => toggleNote(note.id)}
 >
-  {note.pinned
-    ? "📌 Unpin"
-    : "📌 Pin"}
-</button>
-    <button
-      className="edit-btn"
-      onClick={() => setEditingNote(note)}
-    >
-      ✏️ Edit
-    </button>
+  <span
+    style={{
+      fontSize: "12px",
+      marginRight: "6px",
+    }}
+  >
+    {selectedNote === note.id ? "▼" : "▶"}
+  </span>
 
-    <button
-      className="delete-btn"
-      onClick={() => deleteNote(note.id)}
-    >
-      🗑 Delete
-    </button>
+  {note.title}
+</h3>
+
+    <small
+  style={{
+    color: "#6b7280",
+    display: "block",
+    marginTop: "4px",
+  }}
+>
+  📅 {note.createdAt} • 📝 {note.content.length} chars
+</small>
+
+    {selectedNote === note.id && (
+      <>
+        <p className="note-content">
+          {note.content}
+        </p>
+
+  
+        <div className="tags-container">
+          {note.tags.map((tag) => (
+            <span
+              key={tag}
+              className="tag"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div className="button-group">
+          <button
+            className="pin-btn"
+            onClick={() =>
+              togglePin(note.id)
+            }
+          >
+            {note.pinned
+              ? "📌 Unpin"
+              : "📌 Pin"}
+          </button>
+
+          <button
+            className="edit-btn"
+            onClick={() =>
+              setEditingNote(note)
+            }
+          >
+            ✏️ Edit
+          </button>
+
+          <button
+            className="delete-btn"
+            onClick={() =>
+              deleteNote(note.id)
+            }
+          >
+            🗑 Delete
+          </button>
+        </div>
+      </>
+    )}
   </div>
-</div>
-        ))
+))
       )}
     </div>
   );
