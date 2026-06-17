@@ -20,6 +20,8 @@ function App() {
   const [trash, setTrash] = useState<Note[]>([]);
   const [showTrash, setShowTrash] =
   useState(false);
+  const [showNotes, setShowNotes] =
+  useState(false);
 
   useEffect(() => {
     setNotes(getNotes());
@@ -219,6 +221,8 @@ const toggleNote = (id: string) => {
     </p>
   </div>
 
+  
+
   <button
     className="theme-btn"
     onClick={() =>
@@ -233,109 +237,134 @@ const toggleNote = (id: string) => {
   editingNote={editingNote}
 />
 
-<SearchBar
-  searchTag={searchTag}
-  setSearchTag={setSearchTag}
-/>
-
 <div
   style={{
-    textAlign: "center",
-    marginBottom: "15px",
+    background: "white",
+    padding: "20px",
+    borderRadius: "16px",
+    marginBottom: "20px",
+    boxShadow:
+      "0 8px 20px rgba(99,102,241,.08)",
   }}
 >
-  <label>Category: </label>
+  <SearchBar
+    searchTag={searchTag}
+    setSearchTag={setSearchTag}
+  />
 
-  <select
-    value={categoryFilter}
-    onChange={(e) =>
-      setCategoryFilter(e.target.value)
-    }
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      gap: "15px",
+      marginTop: "15px",
+      flexWrap: "wrap",
+    }}
   >
-    <option value="All">All</option>
-    <option value="Study">📚 Study</option>
-    <option value="Work">💼 Work</option>
-    <option value="Personal">🏠 Personal</option>
-  </select>
-</div>
+    <select
+      value={categoryFilter}
+      onChange={(e) =>
+        setCategoryFilter(
+          e.target.value
+        )
+      }
+    >
+      <option value="All">
+        📂 All
+      </option>
 
-<div
-  style={{
-    textAlign: "center",
-    marginBottom: "15px",
-  }}
+      <option value="Study">
+        📚 Study
+      </option>
+
+      <option value="Work">
+        💼 Work
+      </option>
+
+      <option value="Personal">
+        🏠 Personal
+      </option>
+    </select>
+
+    <select
+      value={sortBy}
+      onChange={(e) =>
+        setSortBy(
+          e.target.value
+        )
+      }
+    >
+      <option value="newest">
+        ↕ Newest
+      </option>
+
+      <option value="oldest">
+        Oldest
+      </option>
+
+      <option value="az">
+        A-Z
+      </option>
+
+      <option value="za">
+        Z-A
+      </option>
+
+      <option value="pinned">
+        📌 Pinned
+      </option>
+    </select>
+
+    <button
+      className="export-btn"
+      onClick={exportNotes}
+    >
+      📤 Export
+    </button>
+
+    <button
+  className="delete-btn"
+  onClick={() =>
+    setShowTrash(!showTrash)
+  }
 >
-  <label>Sort By: </label>
-
-  <select
-    value={sortBy}
-    onChange={(e) =>
-      setSortBy(e.target.value)
-    }
-  >
-    <option value="newest">
-      Newest First
-    </option>
-
-    <option value="oldest">
-      Oldest First
-    </option>
-
-    <option value="az">
-      A - Z
-    </option>
-
-    <option value="za">
-      Z - A
-    </option>
-
-    <option value="pinned">
-      Pinned First
-    </option>
-  </select>
-</div>
-
-<div
-  style={{
-    textAlign: "center",
-    marginBottom: "15px",
-  }}
->
-  <button
-    className="export-btn"
-    onClick={exportNotes}
-  >
-    📤 Export Notes
-  </button>
+  🗑 Trash ({trash.length})
+</button>
+  </div>
 </div>
 
 <hr />
 
-      <div style={{ textAlign: "center" }}>
+    <div
+  className="notes-header"
+  onClick={() =>
+    setShowNotes(!showNotes)
+  }
+  style={{
+    cursor: "pointer",
+  }}
+>
   <h2>
-    📚 My Notes ({filteredNotes.length})
+    {showNotes ? "▼" : "▶"} 📚 My Notes
   </h2>
+
+  <p>
+    {filteredNotes.length} Notes Available
+  </p>
 </div>
+<p
+  style={{
+    textAlign: "center",
+    color: "#0b0c0e",
+    fontWeight: "500",
+    marginTop: "5px",
+  }}
+>
+  
+</p>
 
 <hr />
 
-<div
-  style={{
-    textAlign: "center",
-    marginTop: "20px",
-  }}
->
-  <button
-    className="delete-btn"
-    onClick={() =>
-      setShowTrash(!showTrash)
-    }
-  >
-    {showTrash
-      ? "❌ Close Trash"
-      : `🗑 Trash (${trash.length})`}
-  </button>
-</div>
 
 {showTrash && (
   <>
@@ -367,17 +396,24 @@ const toggleNote = (id: string) => {
   </>
 )}
 
-      {filteredNotes.length === 0 ? (
-        <div
+      {showNotes && (
+  <>
+    {filteredNotes.length === 0 ? (
+      <div
   style={{
     textAlign: "center",
-    padding: "30px",
-    color: "#64748b",
+    padding: "50px 20px",
   }}
 >
-  <h3>📝 No Notes Found</h3>
+  <div style={{ fontSize: "60px" }}>
+    📝
+  </div>
+
+  <h3>No Notes Yet</h3>
+
   <p>
-    Create a note or try a different search.
+    Create your first note and start
+    organizing your ideas.
   </p>
 </div>
       ) : (
@@ -507,6 +543,8 @@ const toggleNote = (id: string) => {
   </div>
 ))
       )}
+  </>
+)}
     </div>
   );
 }

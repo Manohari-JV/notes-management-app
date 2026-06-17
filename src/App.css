@@ -1,219 +1,252 @@
 body {
   font-family: "Inter", sans-serif;
-  background: #f3f4ff;
+  background: linear-gradient(
+    135deg,
+    #cb7bb2,
+    #6eb1da
+  );
   margin: 0;
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
-/* Header */
-
 h1 {
-  font-size: 42px;
-  font-weight: 800;
-  color: #312e81;
-  text-align: center;
-  margin-bottom: 8px;
+font-size: 42px;
+font-weight: 800;
+color: #312e81;
+text-align: center;
+margin-bottom: 8px;
 }
 
 .subtitle {
-  text-align: center;
-  color: #64748b;
-  font-size: 16px;
-  margin-bottom: 30px;
+text-align: center;
+color: #64748b;
+font-size: 16px;
+margin-bottom: 30px;
 }
 
 h2 {
-  text-align: center;
-  font-size: 24px;
-  font-weight: 600;
-  color: #4338ca;
+text-align: center;
+font-size: 24px;
+font-weight: 600;
+color: #4338ca;
 }
 
 h3 {
-  font-size: 22px;
-  font-weight: 700;
+font-size: 22px;
+font-weight: 700;
 }
-
-/* Inputs */
 
 input,
 textarea {
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 14px;
+width: 100%;
+box-sizing: border-box;
+font-size: 14px;
 }
-
-/* Search Bar */
 
 .MuiOutlinedInput-root {
-  background: white;
-  border-radius: 30px !important;
+background: white;
+border-radius: 30px !important;
 }
 
-/* Note Cards */
-
 .note-card {
-  background: white;
-  border-radius: 18px;
-  padding: 24px;
-  margin-top: 20px;
-  text-align: left;
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(10px);
+border-radius: 20px;
+padding: 24px;
+margin-top: 20px;
+text-align: left;
+box-shadow: 0 10px 25px rgba(99, 102, 241, 0.12);
+transition: all 0.3s ease;
+border: 1px solid rgba(99, 102, 241, 0.08);
+}
+
+.note-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 15px 35px rgba(99, 102, 241, 0.18);
 }
 
 .note-card h3 {
-  margin: 0;
-  color: #111827;
+margin: 0;
+color: #4338ca;
 }
 
 .note-card small {
-  color: #6b7280;
+color: #6b7280;
 }
 
 .note-content {
-  margin-top: 12px;
-  margin-bottom: 15px;
-  font-size: 15px;
-  line-height: 1.6;
-  color: #374151;
+margin-top: 12px;
+margin-bottom: 15px;
+font-size: 15px;
+line-height: 1.6;
+color: #374151;
 }
 
-/* Tags */
-
 .tags-container {
-  margin-top: 10px;
+margin-top: 10px;
 }
 
 .tag {
-  display: inline-block;
-  background: #ede9fe;
-  color: #6d28d9;
-  padding: 6px 12px;
-  border-radius: 20px;
-  margin-right: 8px;
-  margin-top: 5px;
-  font-size: 12px;
-  font-weight: 500;
+display: inline-block;
+background: #ede9fe;
+color: #6d28d9;
+padding: 6px 12px;
+border-radius: 30px;
+margin-right: 8px;
+margin-top: 5px;
+font-size: 12px;
+font-weight: 600;
 }
-
-/* Button Section */
 
 .button-group {
-  margin-top: 20px;
+margin-top: 20px;
 }
-
-/* Edit Button */
 
 .edit-btn {
-  background: #6366f1;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 8px;
-  margin-right: 8px;
-  cursor: pointer;
+background: #6366f1;
+color: white;
+padding: 8px 14px;
+border: none;
+border-radius: 8px;
+margin-right: 8px;
+cursor: pointer;
 }
-
-/* Delete Button */
 
 .delete-btn {
-  background: #f472b6;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-/* Divider */
-
-hr {
-  border: none;
-  border-top: 1px solid #cbd5e1;
-  margin: 25px 0;
-}
-
-/* Mobile */
-
-@media (max-width: 768px) {
-  h1 {
-    font-size: 32px;
-  }
-
-  .note-card {
-    padding: 18px;
-  }
+background: #f472b6;
+color: white;
+padding: 8px 14px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
 }
 
 .pin-btn {
-  background: #a855f7;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-right: 8px;
+background: #a855f7;
+color: white;
+padding: 8px 14px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+margin-right: 8px;
 }
 
 .theme-btn {
-  background: #4338ca;
-  color: white;
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
+background: #4338ca;
+color: white;
+padding: 10px 16px;
+border-radius: 10px;
+border: none;
+cursor: pointer;
+}
+
+.export-btn {
+background: #14b8a6;
+color: white;
+padding: 10px 16px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 600;
+}
+
+.export-btn:hover {
+background: #0f766e;
+}
+
+select {
+padding: 10px 14px;
+border-radius: 10px;
+border: 1px solid #d1d5db;
+background: white;
+margin-left: 8px;
+cursor: pointer;
+}
+
+.dashboard-card {
+background: white;
+padding: 20px;
+border-radius: 18px;
+margin-bottom: 20px;
+box-shadow: 0 8px 24px rgba(99, 102, 241, 0.1);
+text-align: center;
+}
+
+hr {
+border: none;
+border-top: 1px solid #cbd5e1;
+margin: 25px 0;
 }
 
 .dark-mode {
-  background: #111827;
-  color: white;
-  border-radius: 20px;
-  padding: 20px;
+background: #111827;
+color: white;
+border-radius: 20px;
+padding: 20px;
 }
 
 .dark-mode h1,
 .dark-mode h2,
 .dark-mode h3 {
-  color: #f9fafb;
+color: #f9fafb;
 }
 
 .dark-mode .subtitle,
 .dark-mode small {
-  color: #d1d5db;
+color: #d1d5db;
 }
 
 .dark-mode .note-card {
-  background: #1f2937;
-  color: white;
+background: #1f2937;
+color: white;
 }
 
 .dark-mode .note-content {
-  color: #e5e7eb;
+color: #e5e7eb;
 }
 
 .dark-mode .tag {
-  background: #374151;
-  color: #c4b5fd;
+background: #374151;
+color: #c4b5fd;
 }
 
-select {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+@media (max-width: 768px) {
+h1 {
+font-size: 32px;
+}
+
+.note-card {
+padding: 18px;
+}
+}
+
+.dashboard-card {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+
+
+.notes-header {
+  text-align: center;
   background: white;
-  margin-left: 8px;
+  padding: 15px;
+  border-radius: 16px;
+  margin: 20px 0;
+  box-shadow: 0 8px 20px rgba(99,102,241,.08);
 }
 
-.export-btn {
-  background: #14b8a6;
-  color: white;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
+.notes-header h2 {
+  color: #4338ca !important;
+  margin: 0;
 }
 
-.export-btn:hover {
-  background: #0f766e;
+.notes-header p {
+  color: #64748b !important;
+  font-size: 15px;
+  font-weight: 500;
+  margin-top: 5px;
 }
