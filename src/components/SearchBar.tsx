@@ -6,11 +6,13 @@ interface SearchBarProps {
 function SearchBar({ searchTag, setSearchTag }: SearchBarProps) {
   return (
     <div>
-      <h2>Search Notes By Tag</h2>
+      <h2 style={{ color: "black" }}>
+  🔍 Search Notes
+</h2>
 
       <input
         type="text"
-        placeholder="Enter tag..."
+        placeholder="Search notes, content, or tags..."
         value={searchTag}
         onChange={(e) => setSearchTag(e.target.value)}
       />

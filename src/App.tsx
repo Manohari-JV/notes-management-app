@@ -63,11 +63,17 @@ function App() {
     saveNotes(updatedNotes);
   };
 
-  const filteredNotes = notes.filter((note) =>
+  const filteredNotes = notes.filter((note) => {
+  const search = searchTag.toLowerCase();
+
+  return (
+    note.title.toLowerCase().includes(search) ||
+    note.content.toLowerCase().includes(search) ||
     note.tags.some((tag) =>
-      tag.toLowerCase().includes(searchTag.toLowerCase())
+      tag.toLowerCase().includes(search)
     )
   );
+});
 
   return (
     <div style={{ padding: "20px" }}>
