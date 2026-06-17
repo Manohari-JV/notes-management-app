@@ -41,12 +41,13 @@ function App() {
   }
 
   const newNote: Note = {
-    id: uuidv4(),
-    title,
-    content,
-    tags,
-    createdAt: new Date().toLocaleString(),
-  };
+  id: uuidv4(),
+  title,
+  content,
+  tags,
+  createdAt: new Date().toLocaleString(),
+  pinned: false,
+};
 
   const updatedNotes = [...notes, newNote];
 
@@ -62,18 +63,32 @@ function App() {
     setNotes(updatedNotes);
     saveNotes(updatedNotes);
   };
-
-  const filteredNotes = notes.filter((note) => {
-  const search = searchTag.toLowerCase();
-
-  return (
-    note.title.toLowerCase().includes(search) ||
-    note.content.toLowerCase().includes(search) ||
-    note.tags.some((tag) =>
-      tag.toLowerCase().includes(search)
-    )
+const togglePin = (id: string) => {
+  const updatedNotes = notes.map((note) =>
+    note.id === id
+      ? { ...note, pinned: !note.pinned }
+      : note
   );
-});
+
+  setNotes(updatedNotes);
+  saveNotes(updatedNotes);
+};
+  const filteredNotes = notes
+  .filter((note) => {
+    const search = searchTag.toLowerCase();
+
+    return (
+      note.title.toLowerCase().includes(search) ||
+      note.content.toLowerCase().includes(search) ||
+      note.tags.some((tag) =>
+        tag.toLowerCase().includes(search)
+      )
+    );
+  })
+  .sort(
+    (a, b) =>
+      Number(b.pinned) - Number(a.pinned)
+  );
 
   return (
     <div
@@ -100,36 +115,66 @@ function App() {
       <hr />
 
       <div style={{ textAlign: "center" }}>
-  <h2>📚 My Notes</h2>
+  <h2>
+    📚 My Notes ({filteredNotes.length})
+  </h2>
 </div>
 
       {filteredNotes.length === 0 ? (
-        <p>No notes found.</p>
+        <div
+  style={{
+    textAlign: "center",
+    padding: "30px",
+    color: "#64748b",
+  }}
+>
+  <h3>📝 No Notes Found</h3>
+  <p>
+    Create a note or try a different search.
+  </p>
+</div>
       ) : (
         filteredNotes.map((note) => (
           <div key={note.id} className="note-card">
-            <h3>{note.title}</h3>
-
-<small>
-  Created: {note.createdAt || "NO DATE FOUND"}
-</small>
-
-<p className="note-content">
-      {note.content}
-    </p>
-
-            <div className="tags-container">
-      {note.tags.map((tag) => (
-        <span key={tag} className="tag">
-          {tag}
-        </span>
-      ))}
+  {note.pinned && (
+    <div
+      style={{
+        color: "#7c3aed",
+        fontWeight: "bold",
+        marginBottom: "8px",
+      }}
+    >
+      📌 Pinned
     </div>
+  )}
 
-            <br />
-            <br />
+  <h3>{note.title}</h3>
 
-            <div className="button-group">
+  <small>
+    Created: {note.createdAt}
+  </small>
+
+  <p className="note-content">
+    {note.content}
+  </p>
+
+  <div className="tags-container">
+    {note.tags.map((tag) => (
+      <span key={tag} className="tag">
+        {tag}
+      </span>
+    ))}
+  </div>
+
+  <div className="button-group">
+   <button
+  className="pin-btn"
+  onClick={() => togglePin(note.id)}
+>
+  {note.pinned
+    ? "📌 Unpin"
+    : "📌 Pin"}
+</button>
     <button
       className="edit-btn"
       onClick={() => setEditingNote(note)}
