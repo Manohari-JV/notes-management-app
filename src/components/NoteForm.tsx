@@ -10,7 +10,8 @@ interface NoteFormProps {
   onAddNote: (
     title: string,
     content: string,
-    tags: string[]
+    tags: string[],
+    category: string
   ) => void;
   editingNote?: {
     title: string;
@@ -26,7 +27,9 @@ function NoteForm({
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
-
+  const [category, setCategory] =
+  useState("Study");
+  
   useEffect(() => {
     if (editingNote) {
       setTitle(editingNote.title);
@@ -50,11 +53,12 @@ function NoteForm({
       .map((tag) => tag.trim())
       .filter(Boolean);
 
-    onAddNote(title, content, tagArray);
+    onAddNote(title, content, tagArray, category);
 
     setTitle("");
     setContent("");
     setTags("");
+    setCategory("Study");
   };
 
   return (
@@ -103,6 +107,28 @@ function NoteForm({
             setContent(e.target.value)
           }
         />
+
+        <select
+  value={category}
+  onChange={(e) =>
+    setCategory(e.target.value)
+  }
+>
+  <option value="Study">
+    📚 Study
+  </option>
+
+  <option value="Work">
+    💼 Work
+  </option>
+
+  <option value="Personal">
+    🏠 Personal
+  </option>
+</select>
+
+<br />
+<br />
 
         <TextField
           fullWidth

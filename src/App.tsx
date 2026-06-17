@@ -15,6 +15,8 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [sortBy, setSortBy] =
   useState("newest");
+  const [categoryFilter, setCategoryFilter] =
+  useState("All");
 
   useEffect(() => {
     setNotes(getNotes());
@@ -23,7 +25,8 @@ function App() {
   const addNote = (
   title: string,
   content: string,
-  tags: string[]
+  tags: string[],
+  category: string
 ) => {
   if (editingNote) {
     const updatedNotes = notes.map((note) =>
@@ -33,6 +36,7 @@ function App() {
             title,
             content,
             tags,
+            category,
           }
         : note
     );
@@ -44,11 +48,12 @@ function App() {
     return;
   }
 
-  const newNote: Note = {
+const newNote: Note = {
   id: uuidv4(),
   title,
   content,
   tags,
+  category,
   createdAt: new Date().toLocaleString(),
   pinned: false,
 };
@@ -86,12 +91,20 @@ const toggleNote = (id: string) => {
   .filter((note) => {
     const search = searchTag.toLowerCase();
 
-    return (
+    const matchesSearch =
       note.title.toLowerCase().includes(search) ||
       note.content.toLowerCase().includes(search) ||
       note.tags.some((tag) =>
         tag.toLowerCase().includes(search)
-      )
+      );
+
+    const matchesCategory =
+      categoryFilter === "All" ||
+      note.category === categoryFilter;
+
+    return (
+      matchesSearch &&
+      matchesCategory
     );
   })
   .sort((a, b) => {
@@ -164,9 +177,29 @@ const toggleNote = (id: string) => {
 
 <div
   style={{
-    marginTop: "15px",
-    marginBottom: "15px",
     textAlign: "center",
+    marginBottom: "15px",
+  }}
+>
+  <label>Category: </label>
+
+  <select
+    value={categoryFilter}
+    onChange={(e) =>
+      setCategoryFilter(e.target.value)
+    }
+  >
+    <option value="All">All</option>
+    <option value="Study">📚 Study</option>
+    <option value="Work">💼 Work</option>
+    <option value="Personal">🏠 Personal</option>
+  </select>
+</div>
+
+<div
+  style={{
+    textAlign: "center",
+    marginBottom: "15px",
   }}
 >
   <label>Sort By: </label>
@@ -266,6 +299,19 @@ const toggleNote = (id: string) => {
   📅 {note.createdAt} • 📝 {note.content.length} characters
 </small>
 
+<p
+  style={{
+    color: "#6366f1",
+    fontSize: "14px",
+    fontWeight: 500,
+    marginTop: "6px",
+  }}
+>
+  {note.category === "Study" && "📚 Study"}
+  {note.category === "Work" && "💼 Work"}
+  {note.category === "Personal" && "🏠 Personal"}
+</p>
+
     {selectedNote === note.id && (
       <>
         <p className="note-content">
@@ -306,13 +352,19 @@ const toggleNote = (id: string) => {
           </button>
 
           <button
-            className="delete-btn"
-            onClick={() =>
-              deleteNote(note.id)
-            }
-          >
-            🗑 Delete
-          </button>
+  className="delete-btn"
+  onClick={() => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this note?"
+      )
+    ) {
+      deleteNote(note.id);
+    }
+  }}
+>
+  🗑 Delete
+</button>
         </div>
       </>
     )}
