@@ -5,5 +5,6 @@ export interface Note {
   tags: string[];
   category: string;
   createdAt: string;
+  updatedAt?: string;
   pinned?: boolean;
 }

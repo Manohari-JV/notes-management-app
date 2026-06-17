@@ -203,3 +203,17 @@ select {
   background: white;
   margin-left: 8px;
 }
+
+.export-btn {
+  background: #14b8a6;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.export-btn:hover {
+  background: #0f766e;
+}

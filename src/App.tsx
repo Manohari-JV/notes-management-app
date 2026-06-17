@@ -17,6 +17,9 @@ function App() {
   useState("newest");
   const [categoryFilter, setCategoryFilter] =
   useState("All");
+  const [trash, setTrash] = useState<Note[]>([]);
+  const [showTrash, setShowTrash] =
+  useState(false);
 
   useEffect(() => {
     setNotes(getNotes());
@@ -37,7 +40,9 @@ function App() {
             content,
             tags,
             category,
+            updatedAt: new Date().toLocaleString(),
           }
+
         : note
     );
 
@@ -65,13 +70,71 @@ const newNote: Note = {
 };
 
   const deleteNote = (id: string) => {
-    const updatedNotes = notes.filter(
-      (note) => note.id !== id
-    );
+  const noteToDelete = notes.find(
+    (note) => note.id === id
+  );
 
-    setNotes(updatedNotes);
-    saveNotes(updatedNotes);
-  };
+  if (noteToDelete) {
+    setTrash([...trash, noteToDelete]);
+  }
+
+  const updatedNotes = notes.filter(
+    (note) => note.id !== id
+  );
+
+  setNotes(updatedNotes);
+  saveNotes(updatedNotes);
+};
+
+
+
+const restoreNote = (id: string) => {
+  const noteToRestore = trash.find(
+    (note) => note.id === id
+  );
+
+  if (!noteToRestore) return;
+
+  const updatedNotes = [
+    ...notes,
+    noteToRestore,
+  ];
+
+  const updatedTrash = trash.filter(
+    (note) => note.id !== id
+  );
+
+  setNotes(updatedNotes);
+  setTrash(updatedTrash);
+
+  saveNotes(updatedNotes);
+};
+
+  const exportNotes = () => {
+  const dataStr = JSON.stringify(
+    notes,
+    null,
+    2
+  );
+
+  const blob = new Blob(
+    [dataStr],
+    { type: "application/json" }
+  );
+
+  const url =
+    URL.createObjectURL(blob);
+
+  const link =
+    document.createElement("a");
+
+  link.href = url;
+  link.download = "notes.json";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+};
 const togglePin = (id: string) => {
   const updatedNotes = notes.map((note) =>
     note.id === id
@@ -232,6 +295,20 @@ const toggleNote = (id: string) => {
   </select>
 </div>
 
+<div
+  style={{
+    textAlign: "center",
+    marginBottom: "15px",
+  }}
+>
+  <button
+    className="export-btn"
+    onClick={exportNotes}
+  >
+    📤 Export Notes
+  </button>
+</div>
+
 <hr />
 
       <div style={{ textAlign: "center" }}>
@@ -239,6 +316,56 @@ const toggleNote = (id: string) => {
     📚 My Notes ({filteredNotes.length})
   </h2>
 </div>
+
+<hr />
+
+<div
+  style={{
+    textAlign: "center",
+    marginTop: "20px",
+  }}
+>
+  <button
+    className="delete-btn"
+    onClick={() =>
+      setShowTrash(!showTrash)
+    }
+  >
+    {showTrash
+      ? "❌ Close Trash"
+      : `🗑 Trash (${trash.length})`}
+  </button>
+</div>
+
+{showTrash && (
+  <>
+    <h2
+      style={{
+        textAlign: "center",
+      }}
+    >
+      🗑 Trash
+    </h2>
+
+    {trash.map((note) => (
+      <div
+        key={note.id}
+        className="note-card"
+      >
+        <h3>{note.title}</h3>
+
+        <button
+          className="edit-btn"
+          onClick={() =>
+            restoreNote(note.id)
+          }
+        >
+          ↩ Restore
+        </button>
+      </div>
+    ))}
+  </>
+)}
 
       {filteredNotes.length === 0 ? (
         <div
@@ -296,7 +423,16 @@ const toggleNote = (id: string) => {
     marginTop: "4px",
   }}
 >
-  📅 {note.createdAt} • 📝 {note.content.length} characters
+  📅 Created: {note.createdAt}
+  {" • "}
+  📝 {note.content.length} chars
+
+  {note.updatedAt && (
+    <>
+      <br />
+      ✏️ Updated: {note.updatedAt}
+    </>
+  )}
 </small>
 
 <p
